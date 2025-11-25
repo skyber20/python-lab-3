@@ -1,17 +1,27 @@
-def quick_sort(a: list[int | float]) -> list[int | float]:
-    if not all(isinstance(i, (int, float)) for i in a):
-        raise TypeError('На вход должен подаваться список чисел')
+from typing import Callable
 
-    def _quick_sort(arr: list[int | float]) -> list[int | float]:
-        if len(arr) <= 1:
-            return arr
 
-        pivot = arr[len(arr) // 2]
-        left_arr = [i for i in arr if i < pivot]
-        middle = [i for i in arr if i == pivot]
-        right_arr = [i for i in arr if i > pivot]
+def quick_sort(a: list, key: Callable = None, cmp: Callable = None) -> list:
+    if len(a) <= 1:
+        return a
 
-        return _quick_sort(left_arr) + middle + _quick_sort(right_arr)
+    key = key or (lambda x: x)
+    cmp = cmp or (lambda x, y: x > y)
 
-    return _quick_sort(a)
+    try:
+        pivot = key(a[len(a) // 2])
+        left_arr, middle, right_arr = [], [], []
+
+        for elem in a:
+            i = key(elem)
+            if cmp(pivot, i):
+                left_arr.append(elem)
+            elif cmp(i, pivot):
+                right_arr.append(elem)
+            else:
+                middle.append(elem)
+    except Exception:
+        raise TypeError('key или cmp к данному типу не применимы')
+
+    return quick_sort(left_arr, key, cmp) + middle + quick_sort(right_arr, key, cmp)
 
