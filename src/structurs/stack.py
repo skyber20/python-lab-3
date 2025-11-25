@@ -31,12 +31,12 @@ class Stack:
             self.size -= 1
 
             return value
-        raise EmptyStack('Чтобы удалить элемент, стек должен быть не пустым')
+        raise EmptyStack()
 
     def peek(self):
         if self.size:
             return self.head.data
-        raise EmptyStack('Чтобы вернуть верхний элемент, стек должен быть не пустым')
+        raise EmptyStack()
 
     def is_empty(self) -> bool:
         return not self.size
@@ -44,7 +44,7 @@ class Stack:
     def min(self):
         if self.size:
             return self.head.cur_mn
-        raise EmptyStack('Чтобы вернуть минимум, стек должен быть не пустым')
+        raise EmptyStack()
 
     def __len__(self):
         return self.size
