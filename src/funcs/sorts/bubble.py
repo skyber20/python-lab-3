@@ -8,12 +8,12 @@ def bubble_sort(a: list, key: Callable = None, cmp: Callable = None) -> list:
     key = key or (lambda x: x)
     cmp = cmp or (lambda x, y: x > y)
 
-    while True:
+    for i in range(len(a) - 1):
         swapped = False
-        for i in range(len(a) - 1):
+        for j in range(len(a) - i - 1):
             try:
-                if cmp(key(a[i]), key(a[i+1])):
-                    a[i], a[i+1] = a[i+1], a[i]
+                if cmp(key(a[j]), key(a[j+1])):
+                    a[j], a[j+1] = a[j+1], a[j]
                     swapped = True
             except Exception:
                 raise TypeError('key или cmp к данному типу не применимы')
