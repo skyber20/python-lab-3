@@ -1,32 +1,16 @@
-from typing import Callable
-
-
-def counting_sort(a: list, key: Callable = None) -> list:
+def counting_sort(a: list[int]) -> list[int]:
     if not a:
         return []
+    if not all(isinstance(i, int) for i in a):
+        raise TypeError('На вход должен подаваться список из целочисленных элементов')
 
-    key = key or (lambda x: x)
+    mn, mx = min(a), max(a)
+    counts = [0] * (mx - mn + 1)
 
-    try:
-        transformed = [key(i) for i in a]
+    for i in a:
+        counts[i-mn] += 1
 
-        if not all(isinstance(i, int) for i in transformed):
-            raise TypeError('На вход должен подаваться список из целочисленных элементов')
-
-        mn, mx = min(transformed), max(transformed)
-
-        if mn == mx:
-            return a
-
-        counts = [[] for _ in range(mx - mn + 1)]
-
-        for orig, transf in zip(a, transformed):
-            counts[transf - mn].append(orig)
-
-        res = []
-        for elem in counts:
-            res.extend(elem)
-    except Exception:
-        raise TypeError('key к данному типу не применим')
-
-    return res
+    sorted_a = []
+    for num, cnt in enumerate(counts, start=mn):
+        sorted_a.extend([num] * cnt)
+    return sorted_a
