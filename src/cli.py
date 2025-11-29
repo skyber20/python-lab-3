@@ -73,6 +73,11 @@ class CommandHandler:
 
         try:
             n = int(inp[1])
+        except ValueError:
+            print('Введите целое число')
+            return True
+
+        try:
             if '-t' in inp:
                 res, time_val = timeit_once(MATH_FUNCS[inp[0]], n)
                 print(res)
@@ -80,8 +85,8 @@ class CommandHandler:
             else:
                 res = MATH_FUNCS[inp[0]](n)
                 print(res)
-        except ValueError:
-            print('Размер массива - число')
+        except ValueError as e:
+            print(str(e))
 
         return True
 

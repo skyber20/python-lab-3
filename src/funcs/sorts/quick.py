@@ -34,4 +34,4 @@ def quick_sort(
     except TypeError:
         raise TypeError('key к данному типу не применимы')
 
-    return quick_sort(left_arr, key, cmp) + middle + quick_sort(right_arr, key, cmp)
+    return quick_sort(left_arr, key) + middle + quick_sort(right_arr, key)
